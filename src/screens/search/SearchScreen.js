@@ -35,8 +35,6 @@ const SearchScreen = ({ navigation, isFocused }) => {
     location => {
       console.log('The current geo location ===> ', location)
       addLocation(location, recording)
-      // I'm currently not recording locations, never update the recording context state to true
-      // So stop tracking before navigate off to another screen
       setTrackLocation(false)
       navigation.navigate('SearchResults', {
         searchTerm: '',
@@ -63,20 +61,14 @@ const SearchScreen = ({ navigation, isFocused }) => {
       </SafeAreaView>
 
       <Divider />
-
-      {/* All the main search screen components should go here */}
       <ScrollView style={styles.titleContainer}>
-        {/* Button to search nearby experiences go here - will trigger useLocation hook, might extract to own component if need to reuse later */}
         <NearByButton onPress={() => setTrackLocation(true)} err={err} />
 
         <Divider />
-        {/* Recent search history goes here */}
         <SearchHistory />
 
         <Text style={styles.title}>This is the real search screen</Text>
       </ScrollView>
-
-      {/* Chips for popular locations or main categories go here */}
     </View>
   )
 }
@@ -93,8 +85,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: 10,
     marginBottom: 20,
-    // borderWidth: 1,
-    // borderColor: 'blue'
   },
   cancelNavLink: {
     marginLeft: 5,
@@ -105,23 +95,14 @@ const styles = StyleSheet.create({
   iconButton: {
     backgroundColor: 'rgba(211, 211, 211, 0.8)',
     marginRight: 0,
-    // position: 'absolute',
-    // right: 0,
-    // top: 20,
-    // margin: 10
   },
   searchNearBy: {
     marginVertical: 20,
     alignItems: 'flex-start',
-    // paddingLeft: 15
   },
   titleContainer: {
-    // alignItems: 'center',
-    // justifyContent: 'center',
     flex: 1,
     paddingHorizontal: 15,
-    // borderWidth: 1,
-    // borderColor: 'red'
   },
   title: {
     fontSize: 20,

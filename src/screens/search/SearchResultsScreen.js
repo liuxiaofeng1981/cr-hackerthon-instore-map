@@ -36,10 +36,8 @@ import useDebug from '../../hooks/useDebug'
 const SearchResultsScreen = ({ navigation }) => {
   const searchTerm = navigation.getParam('searchTerm')
   const searchMode = navigation.getParam('searchMode')
-  // console.log('On search results screen - searchTerm ==> ', searchTerm)
   console.log('On search results screen - searchMode ==> ', searchMode)
 
-  // Also get current location from context - app state
   const {
     state: { currentLocation },
   } = useContext(LocationContext)
@@ -47,8 +45,6 @@ const SearchResultsScreen = ({ navigation }) => {
   console.log('currentLocation on search results screen ==>', currentLocation)
 
   const searchBarIcon = { source: 'arrow-left', direction: 'auto' }
-
-  // useSearchResults hook should be done on this screen
   const [
     searchKeywords,
     searchResults,
@@ -61,13 +57,6 @@ const SearchResultsScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.searchBarContainer}>
-        {/*<IconButton
-          icon='arrow-left'
-          size={20}
-          // color='white'
-          onPress={() => navigation.goBack()}
-          style={styles.iconButton}
-        />*/}
         {!!errorMessage && <Text>{errorMessage}</Text>}
         <SearchBar
           initialTerm={searchTerm}
@@ -79,25 +68,16 @@ const SearchResultsScreen = ({ navigation }) => {
             searchKeywords(newTerm)
           }}
         />
-        {/*<NavLink text="Cancel" routeName="mainBottomTabFlow" style={styles.cancel} />*/}
       </SafeAreaView>
-
       <Divider />
-
-      {/* All the main search results screen components should go here */}
       <View style={styles.titleContainer}>
         <Divider />
-
-        {/* TODO: add facility to reset/update geo location, as the first time used NearBy button, it sets that location into context */}
-
-        {/* Add this search result list to a separate component */}
         <StoresList
           experiences={searchResults ? searchResults.result.hits : null}
           location={currentLocation ? currentLocation.geocode[0].city : null}
           loading={loading}
         />
 
-        {/* Add a Floating Button for Map, Filters, Sort etc, this needs to use aggs from searchResults */}
         {searchResults && (
           <View style={styles.fab}>
             <Button
@@ -106,14 +86,6 @@ const SearchResultsScreen = ({ navigation }) => {
               color="#E63E31"
               style={[styles.fabAction, styles.fabAction__left]}
               onPress={() => {
-                // navigation.navigate('ExperiencesMap', { experiences: getExperiencesForMap(searchResults.result.hits) })
-
-                const start = Date.now()
-                console.log(
-                  'Experiences Map Object =====>',
-                  getExperiencesForMapAsObject(searchResults.result.hits)
-                )
-                console.log('Time:', Date.now() - start)
                 navigation.navigate('ExperiencesMap', {
                   experiences: getExperiencesForMapAsObject(
                     searchResults.result.hits
@@ -132,34 +104,8 @@ const SearchResultsScreen = ({ navigation }) => {
             >
               Filters
             </Button>
-            {/*<FAB
-            small
-            icon='map-marker'
-            label='Map'
-            style={[styles.fabAction, styles.fabAction__left]}
-            onPress={() =>
-              // navigation.navigate('AddNotes', {
-              //   addNote
-              // })
-              console.log('Pressed me')
-            }
-          />
-          <FAB
-            small
-            icon='tune'
-            label='Filters'
-            style={[styles.fabAction, styles.fabAction__right]}
-            onPress={() =>
-              // navigation.navigate('AddNotes', {
-              //   addNote
-              // })
-              console.log('Pressed me')
-            }
-          />*/}
           </View>
         )}
-
-        {/*<Text style={styles.title}>This is the search results screen</Text>*/}
       </View>
     </View>
   )
@@ -177,29 +123,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: 10,
     marginBottom: 20,
-    // borderWidth: 1,
-    // borderColor: 'blue'
   },
   iconButton: {
-    // backgroundColor: 'rgba(211, 211, 211, 0.8)',
     marginRight: 0,
-    // position: 'absolute',
-    // right: 0,
-    // top: 20,
-    // margin: 10
   },
   titleContainer: {
-    // alignItems: 'center',
-    // justifyContent: 'center',
     flex: 1,
     paddingHorizontal: 6,
-    // borderWidth: 1,
-    // borderColor: 'red'
   },
   fab: {
     position: 'absolute',
-    // borderWidth: 1,
-    // borderColor: 'blue',
     bottom: 15,
     width: '100%',
     justifyContent: 'center',
@@ -207,7 +140,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   fabAction: {
-    // height: 45,
     borderRadius: 20,
     width: 115,
     backgroundColor: '#E63E31',
@@ -216,7 +148,6 @@ const styles = StyleSheet.create({
     borderTopEndRadius: 0,
     borderBottomEndRadius: 0,
     borderRightWidth: 1,
-    // borderRightColor: ''
   },
   fabAction__right: {
     borderTopLeftRadius: 0,
