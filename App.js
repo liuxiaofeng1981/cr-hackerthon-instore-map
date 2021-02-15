@@ -1,21 +1,30 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react'
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper'
+import AppNavigator from './src/navigation'
+import { setNavigator } from './src/navigation/navigationRef'
+import { Provider as LocationProvider } from './src/context/LocationContext'
+import { Provider as SearchProvider } from './src/context/SearchContext'
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+const theme = {
+  ...DefaultTheme,
+  roundness: 2,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#E63E31',
+    accent: '#eee',
+  },
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default () => (
+  <LocationProvider>
+    <SearchProvider>
+      <PaperProvider theme={theme}>
+        <AppNavigator
+          ref={navigator => {
+            setNavigator(navigator)
+          }}
+        />
+      </PaperProvider>
+    </SearchProvider>
+  </LocationProvider>
+)
